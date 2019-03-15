@@ -61,6 +61,19 @@ def films
   return Film.map_items(film_data)
 end
 
+#remove ticket price from customer funds
+def remaining_funds
+  sql = "SELECT films.price AS money_spent FROM customers
+  INNER JOIN tickets
+  ON tickets.customer_id = customers.id
+  INNER JOIN films
+  ON tickets.film_id = films.id
+  WHERE customers.id = $1"
+  values = [@id]
+  spending = SqlRunner.run(sql, values)
+  spending_arr = spending.map{|spending| spending['money_spent'].to_i }
+  @funds -= spending_arr.sum
+end
 
 
 #mapping
