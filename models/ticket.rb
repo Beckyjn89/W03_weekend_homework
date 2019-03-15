@@ -8,13 +8,13 @@ class Ticket
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @customer_id = options['customer_id'].to_i
-    @film_id = options['film_id'].to_i
+    @screening_id = options['screening_id'].to_i
   end
 
 #create
   def save
-    sql = "INSERT INTO tickets(customer_id, film_id) VALUES ($1, $2) RETURNING id;"
-    values = [@customer_id, @film_id]
+    sql = "INSERT INTO tickets(customer_id, screening_id) VALUES ($1, $2) RETURNING id;"
+    values = [@customer_id, @screening_id]
     ticket = SqlRunner.run(sql, values).first
     @id = ticket['id'].to_i
   end
@@ -28,8 +28,8 @@ class Ticket
 
 #update
 def update
-  sql = "UPDATE tickets SET (customer_id, film_id) = ($1, $2)"
-  values = [@customer_id, @film_id]
+  sql = "UPDATE tickets SET (customer_id, screening_id) = ($1, $2)"
+  values = [@customer_id, @screening_id]
   SqlRunner.run(sql, values)
 end
 

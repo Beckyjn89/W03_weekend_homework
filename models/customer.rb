@@ -53,8 +53,10 @@ def films
   sql = "SELECT * FROM customers
   INNER JOIN tickets
   ON tickets.customer_id = customers.id
+  INNER JOIN screenings
+  ON tickets.screening_id = screenings.id
   INNER JOIN films
-  ON tickets.film_id = films.id
+  ON screenings.film_id = films.id
   WHERE customers.id = $1"
   values = [@id]
   film_data = SqlRunner.run(sql, values)
@@ -66,8 +68,10 @@ def remaining_funds
   sql = "SELECT films.price AS money_spent FROM customers
   INNER JOIN tickets
   ON tickets.customer_id = customers.id
+  INNER JOIN screenings
+  ON tickets.screening_id = screenings.id
   INNER JOIN films
-  ON tickets.film_id = films.id
+  ON screenings.film_id = films.id
   WHERE customers.id = $1"
   values = [@id]
   spending = SqlRunner.run(sql, values)
