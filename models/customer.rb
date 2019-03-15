@@ -75,6 +75,10 @@ def remaining_funds
   @funds -= spending_arr.sum
 end
 
+#how many tickets customer has
+  def tickets_num
+    return self.films.count
+  end
 
 #mapping
   def self.map_items(customer_data)

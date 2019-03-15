@@ -58,6 +58,11 @@ def customers
   return Customer.map_items(customer_data)
 end
 
+#how many tickets film has sold
+  def tickets_num
+    return self.customers.count
+  end
+
 #mapping
   def self.map_items(film_data)
     return film_data.map { |film| Film.new(film) }
