@@ -23,6 +23,8 @@ customer6 = Customer.new({'name' => 'Sian', 'funds' => 40})
 customer6.save
 customer7 = Customer.new({'name' => 'Lucy', 'funds' => 40})
 customer7.save
+customer8 = Customer.new({'name' => 'Mads', 'funds' => 20})
+customer8.save
 
 
 film1 = Film.new({'title' => 'Captain Marvel', 'price' => 10})
@@ -31,14 +33,17 @@ film2 = Film.new({'title' => 'Into the Spiderverse', 'price' => 7})
 film2.save
 film3 = Film.new({'title' => 'Lord of the Rings (Extended Edition Marathon)', 'price' => 30})
 film3.save
+film4 = Film.new({'title' => 'We Are The Best!', 'price' => '7'})
+film4.save
 
 screening1 = Screening.new({'time' => 1200, 'film_id' => film2.id})
 screening2 = Screening.new({'time' => 1300, 'film_id' => film1.id})
 screening3 = Screening.new({'time' => 1500, 'film_id' => film2.id})
 screening4 = Screening.new({'time' => 1600, 'film_id' => film1.id})
-screening5 = Screening.new({'time' => 1800, 'film_id' => film3.id})
+screening5 = Screening.new({'time' => 2000, 'film_id' => film3.id})
 screening6 = Screening.new({'time' => 1900, 'film_id' => film1.id})
 screening7 = Screening.new({'time' => 2200, 'film_id' => film1.id})
+screening8 = Screening.new({'time' => 1800, 'film_id' => film4.id})
 screening1.save
 screening2.save
 screening3.save
@@ -46,6 +51,7 @@ screening4.save
 screening5.save
 screening6.save
 screening7.save
+screening8.save
 
 
 ticket1 = Ticket.new({'customer_id' => customer1.id, 'screening_id' => screening1.id})
@@ -68,6 +74,8 @@ ticket9 = Ticket.new({'customer_id' => customer6.id, 'screening_id' => screening
 
 ticket10 = Ticket.new({'customer_id' => customer7.id, 'screening_id' => screening7.id})
 
+ticket11 = Ticket.new({'customer_id' => customer8.id, 'screening_id' => screening8.id})
+
 
 
 ticket1.save
@@ -80,6 +88,7 @@ ticket7.save
 ticket8.save
 ticket9.save
 ticket10.save
+ticket11.save
 
 binding.pry
 nil

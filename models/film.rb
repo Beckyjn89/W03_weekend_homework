@@ -84,27 +84,22 @@ def most_pop_screening
   all_screenings_freq = SqlRunner.run(sql, values)
   screening_data = all_screenings_freq
   return Screening.map_items(screening_data)
-
-
 end
 
-## code commented out because it no longer works now screenings table has been added - to be fixed
-# def customers
-#   sql = "SELECT * FROM films
-#   INNER JOIN tickets
-#   ON tickets.film_id = films.id
-#   INNER JOIN customers
-#   ON tickets.customer_id = customers.id
-#   WHERE films.id = $1"
-#   values = [@id]
-#   customer_data = SqlRunner.run(sql, values)
-#   return Customer.map_items(customer_data)
-# end
-
-#how many tickets film has sold
-  # def tickets_num
-  #   return self.customers.count
-  # end
+#top three films
+def self.top_three
+    sql = "SELECT COUNT(tickets.*) AS MOST_FREQUENT, films.*
+    FROM tickets
+    INNER JOIN screenings
+    ON tickets.screening_id = screenings.id
+    INNER JOIN films
+    ON screenings.film_id = films.id
+    GROUP BY screenings.film_id, films.id
+    ORDER BY COUNT(tickets.screening_id) DESC
+    LIMIT 3"
+    film_data = SqlRunner.run(sql)
+    return Film.map_items(film_data)
+  end
 
 #mapping
   def self.map_items(film_data)

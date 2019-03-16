@@ -68,4 +68,17 @@ end
     return screening_data.map { |screening| Screening.new(screening) }
   end
 
+  #top three screenings
+  def self.top_three
+    sql = "SELECT COUNT(tickets.screening_id) AS MOST_FREQUENT, screenings.*
+    FROM tickets
+    INNER JOIN screenings
+    ON tickets.screening_id = screenings.id
+    GROUP BY tickets.screening_id, screenings.id
+    ORDER BY COUNT(tickets.screening_id) DESC
+    LIMIT 3"
+    screening_data = SqlRunner.run(sql)
+    return Screening.map_items(screening_data)
+  end
+
 end
