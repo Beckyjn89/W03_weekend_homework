@@ -23,7 +23,7 @@ class Screening
   def self.all
     sql = "SELECT * FROM screenings"
     screening_data = SqlRunner.run(sql)
-    return Film.map_items(screening_data)
+    return Screening.map_items(screening_data)
   end
 
 #update

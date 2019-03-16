@@ -1,4 +1,5 @@
 require_relative('../db/sql_runner.rb')
+require_relative('./screening.rb')
 
 class Film
 
@@ -46,6 +47,48 @@ def self.delete_all
   SqlRunner.run(sql)
 end
 
+#see all screenings for a particular film
+def all_screenings
+  sql = "SELECT * FROM films
+        INNER JOIN screenings
+        ON screenings.film_id = films.id
+        WHERE films.id = $1"
+  values = [@id]
+  screening_data = SqlRunner.run(sql, values)
+  return Screening.map_items(screening_data)
+end
+
+def total_customers
+  sql = "SELECT COUNT (tickets.id) AS sales_count FROM films
+  INNER JOIN screenings
+  ON screenings.film_id = films.id
+  INNER JOIN tickets
+  ON tickets.screening_id = screenings.id
+  WHERE films.id = $1"
+  values = [@id]
+  tot_custs = SqlRunner.run(sql, values)
+  return tot_custs.first['sales_count'].to_i
+end
+
+#most popular screening
+def most_pop_screening
+  sql = "SELECT COUNT(tickets.screening_id) AS MOST_FREQUENT, screenings.*
+  FROM tickets
+  INNER JOIN screenings
+  ON tickets.screening_id = screenings.id
+  WHERE screenings.film_id = $1
+  GROUP BY tickets.screening_id, screenings.id
+  ORDER BY COUNT(tickets.screening_id) DESC
+  LIMIT 1"
+  values = [@id]
+  all_screenings_freq = SqlRunner.run(sql, values)
+  screening_data = all_screenings_freq
+  return Screening.map_items(screening_data)
+
+
+end
+
+## code commented out because it no longer works now screenings table has been added - to be fixed
 # def customers
 #   sql = "SELECT * FROM films
 #   INNER JOIN tickets

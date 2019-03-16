@@ -1,5 +1,5 @@
 require_relative('../db/sql_runner.rb')
-require_relative('./film.rb')
+require_relative('./screening.rb')
 
 
 class Customer
@@ -48,8 +48,8 @@ def self.delete_all
   SqlRunner.run(sql)
 end
 
-#all films a customer has tickets to see
-def films
+#all screenings a customer has tickets to see
+def tickets
   sql = "SELECT * FROM customers
   INNER JOIN tickets
   ON tickets.customer_id = customers.id
@@ -59,8 +59,8 @@ def films
   ON screenings.film_id = films.id
   WHERE customers.id = $1"
   values = [@id]
-  film_data = SqlRunner.run(sql, values)
-  return Film.map_items(film_data)
+  screening_data = SqlRunner.run(sql, values)
+  return Screening.map_items(screening_data)
 end
 
 #remove ticket price from customer funds
